@@ -1,12 +1,9 @@
-SET NAMES latin1;
-SET FOREIGN_KEY_CHECKS = 0;
-
 CREATE TABLE `ref_census_surnames` (
   `name` varchar(255) NOT NULL,
   `freq` float NOT NULL,
   `c_freq` float NOT NULL,
   `rank` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+);
 
 insert into `ref_census_surnames` values('smith','1.006','1.006','1'),
  ('johnson','0.81','1.816','2'),
@@ -88808,4 +88805,3 @@ insert into `ref_census_surnames` values('beerle','0','90.407','88001'),
  ('aalund','0','90.483','88798'),
  ('aalderink','0','90.483','88799');
 
-SET FOREIGN_KEY_CHECKS = 1;
