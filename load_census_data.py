@@ -17,7 +17,8 @@ class Name(Base):
     freq = Column(Float)
     cum_freq = Column(Float)
     rank = Column(Integer)
-    __mapper_args__ = {'polymorphic_on': id}
+    discriminator = Column('type', String(50))
+    __mapper_args__ = {'polymorphic_on': discriminator}
 
 
 class Surname(Name):
@@ -48,3 +49,8 @@ for fname, _class in [('ref_census_surnames.csv', Surname),
                                 rank=int(row[3])))
         session.add_all(names)
         session.commit
+
+print('Number of surnames: {}'.ormat(session.query(Surname).all().count()))
+print('Number of female first names: {}'.ormat(session.query(FemaleFirstName).all().count()))
+print('Number of male first names: {}'.ormat(session.query(MaleFirstName).all().count()))
+
