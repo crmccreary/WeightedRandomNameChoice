@@ -13,12 +13,11 @@ class Name(Base):
     __tablename__ = 'names'
 
     id = Column(Integer, primary_key=True)
-    surname = Column(String)
+    name = Column(String)
     freq = Column(Float)
     cum_freq = Column(Float)
     rank = Column(Integer)
-    discriminator = Column('type', String(50))
-    __mapper_args__ = {'polymorphic_on': discriminator}
+    __mapper_args__ = {'polymorphic_on': id}
 
 
 class Surname(Name):
@@ -43,9 +42,9 @@ for fname, _class in [('ref_census_surnames.csv', Surname),
     with open(fname, 'rb') as csvfile:
         rdr = csv.reader(csvfile, delimiter=',')
         for row in rdr:
-            names.append(_class(row[0],
-                                float(row[1]),
-                                float(row[2]),
-                                int(row[3])))
+            names.append(_class(name=row[0],
+                                freq=float(row[1]),
+                                cum_freq=float(row[2]),
+                                rank=int(row[3])))
         session.add_all(names)
         session.commit
