@@ -2,36 +2,13 @@ import csv
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Float
 from sqlalchemy.orm import sessionmaker
+from model import (Base,
+                   Surname,
+                   FemaleFirstName,
+                   MaleFirstName)
 
 engine = create_engine('sqlite:///census_data.db')
-Base = declarative_base()
-
-
-class Name(Base):
-    __tablename__ = 'names'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    freq = Column(Float)
-    cum_freq = Column(Float)
-    rank = Column(Integer)
-    discriminator = Column('type', String(50))
-    __mapper_args__ = {'polymorphic_on': discriminator}
-
-
-class Surname(Name):
-    __mapper_args__ = {'polymorphic_identity': 'surname'}
-
-
-class FemaleFirstName(Name):
-    __mapper_args__ = {'polymorphic_identity': 'female_first_name'}
-
-
-class MaleFirstName(Name):
-    __mapper_args__ = {'polymorphic_identity': 'male_first_name'}
-
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -50,7 +27,6 @@ for fname, _class in [('ref_census_surnames.csv', Surname),
         session.add_all(names)
         session.commit
 
-print('Number of surnames: {}'.ormat(session.query(Surname).all().count()))
-print('Number of female first names: {}'.ormat(session.query(FemaleFirstName).all().count()))
-print('Number of male first names: {}'.ormat(session.query(MaleFirstName).all().count()))
-
+print('Number of surnames: {}'.format(session.query(Surname).count()))
+print('Number of female first names: {}'.format(session.query(FemaleFirstName).count()))
+print('Number of male first names: {}'.format(session.query(MaleFirstName).count()))
