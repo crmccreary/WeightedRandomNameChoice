@@ -22,15 +22,15 @@ class Name(Base):
 
 
 class Surname(Name):
-    __mapper_args__ = {'polymorphic_on': 'surname'}
+    __mapper_args__ = {'polymorphic_identity': 'surname'}
 
 
 class FemaleFirstName(Name):
-    __mapper_args__ = {'polymorphic_on': 'female_first_name'}
+    __mapper_args__ = {'polymorphic_identity': 'female_first_name'}
 
 
 class MaleFirstName(Name):
-    __mapper_args__ = {'polymorphic_on': 'male_first_name'}
+    __mapper_args__ = {'polymorphic_identity': 'male_first_name'}
 
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
