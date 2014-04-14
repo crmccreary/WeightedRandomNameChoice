@@ -25,7 +25,7 @@ for fname, _class in [('ref_census_surnames.csv', Surname),
                                 cum_freq=float(row[2]),
                                 rank=int(row[3])))
         session.add_all(names)
-        session.commit
+        session.commit()
 
 print('Number of surnames: {}'.format(session.query(Surname).count()))
 print('Number of female first names: {}'.format(session.query(FemaleFirstName).count()))
